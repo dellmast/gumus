@@ -25,8 +25,8 @@ def gram_silver_try():
 
 
 def send(text):
-    token = os.environ["TELEGRAM_BOT_TOKEN"]
-    chat_id = os.environ["TELEGRAM_CHAT_ID"]
+    token = os.environ["TELEGRAM_BOT_TOKEN"].strip()
+   chat_id = os.environ["TELEGRAM_CHAT_ID"].strip()
     data = urllib.parse.urlencode({"chat_id": chat_id, "text": text}).encode()
     urllib.request.urlopen(
         f"https://api.telegram.org/bot{token}/sendMessage", data=data, timeout=20
@@ -49,7 +49,7 @@ def save_state(state):
 def main():
     price = gram_silver_try()
     hour_key = datetime.now(TZ).strftime("%Y-%m-%d %H")
-    grams = float(os.environ.get("GRAMS") or 0)  # opsiyonel: elindeki gram miktarı
+      grams = float((os.environ.get("GRAMS") or "0").strip() or 0)
 
     def price_text(p):
         text = f"Gram gümüş: {p:.2f} TL"
